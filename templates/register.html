@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <div class="glass-card p-5 text-center">
+            <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+            <h2 class="mb-4">Create Account</h2>
+            <form method="POST" id="regForm" onsubmit="return validatePass()">
+                <div class="mb-3 text-start">
+                    <label class="form-label">Username</label>
+                    <input type="text" name="username" class="form-control" required>
+                </div>
+                
+                <div class="mb-3 text-start position-relative">
+                    <label class="form-label">Password</label>
+                    <div class="input-group">
+                        <input type="password" name="password" id="pass1" class="form-control" required>
+                        <button class="btn btn-outline-secondary" type="button" onclick="togglePass('pass1')"><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+
+                <div class="mb-4 text-start position-relative">
+                    <label class="form-label">Confirm Password</label>
+                    <div class="input-group">
+                        <input type="password" id="pass2" class="form-control" required>
+                        <button class="btn btn-outline-secondary" type="button" onclick="togglePass('pass2')"><i class="fas fa-eye"></i></button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mb-3 hover-lift">Register</button>
+            </form>
+            <p class="text-muted">Already have an account? <a href="{{ url_for('login') }}">Log in here</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function togglePass(id) {
+        const x = document.getElementById(id);
+        const icon = x.nextElementSibling.querySelector('i');
+        if (x.type === "password") {
+            x.type = "text";
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            x.type = "password";
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
+    function validatePass() {
+        if(document.getElementById('pass1').value !== document.getElementById('pass2').value) {
+            alert("Passwords do not match!"); 
+            return false;
+        }
+        return true;
+    }
+</script>
+{% endblock %}

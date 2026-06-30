@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="glass-card p-4 mb-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Edit Book Details</h2>
+                <a href="{{ url_for('book_detail', id=book.id) }}" class="btn btn-outline-primary btn-sm">Cancel</a>
+            </div>
+            
+            <form method="POST" class="needs-validation" novalidate>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Title *</label>
+                        <input type="text" class="form-control" name="title" value="{{ book.title }}" required>
+                        <div class="invalid-feedback">Please enter a book title.</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Author *</label>
+                        <input type="text" class="form-control" name="author" value="{{ book.author }}" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-8">
+                        <label class="form-label">Series Name (Optional)</label>
+                        <input type="text" class="form-control" name="series" value="{{ book.series or '' }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Volume / Book #</label>
+                        <input type="text" class="form-control" name="series_number" value="{{ book.series_number or '' }}">
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-md-5">
+                        <label class="form-label">Genre</label>
+                        <input type="text" class="form-control" name="genre" value="{{ book.genre or '' }}">
+                    </div>
+                    <div class="col-md-7">
+                        <label class="form-label">Custom Tags</label>
+                        <input type="text" class="form-control" name="tags" value="{{ book.tags or '' }}" placeholder="e.g. sci-fi, favorites">
+                        <small class="text-muted" style="font-size: 0.75rem;">Separate with commas</small>
+                    </div>
+                </div>
+
+                <div class="row mb-4 align-items-center">
+                    <div class="col-md-6">
+                        <label class="form-label">Status</label>
+                        <select class="form-select" name="status">
+                            <option value="Want to Read" {% if book.status == 'Want to Read' %}selected{% endif %}>Want to Read</option>
+                            <option value="Currently Reading" {% if book.status == 'Currently Reading' %}selected{% endif %}>Currently Reading</option>
+                            <option value="Completed" {% if book.status == 'Completed' %}selected{% endif %}>Completed</option>
+                            <option value="Abandoned" {% if book.status == 'Abandoned' %}selected{% endif %}>Abandoned</option>
+                        </select>
+                    </div>
+                    
+                    <div class="col-md-6 text-center">
+                        <label class="form-label d-block mb-1">Rating</label>
+                        <div class="star-rating fs-3 text-warning d-flex justify-content-center text-nowrap gap-2" style="cursor: pointer;">
+                            {% for i in range(1, 6) %}
+                                <i class="fa-star rating-star {% if (book.rating or 0) >= i %}fas{% else %}far{% endif %}" data-value="{{ i }}"></i>
+                            {% endfor %}
+                        </div>
+                        <input type="hidden" name="rating" id="ratingInput" value="{{ book.rating or 0 }}">
+                    </div>
+                </div>
+
+                <div class="row mb-4 p-3 rounded" style="background: var(--input-bg);">
+                    <h5 class="mb-3">Reading Progress</h5>
+                    <div class="col-md-6">
+                        <label class="form-label">Current Page</label>
+                        <input type="number" class="form-control" name="current_page" value="{{ book.current_page }}" min="0" max="{{ book.total_pages }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Total Pages *</label>
+                        <input type="number" class="form-control" name="total_pages" value="{{ book.total_pages }}" required min="1">
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Notes/Description</label>
+                    <textarea class="form-control" name="notes" rows="4">{{ book.notes or '' }}</textarea>
+                </div>
+                
+                <div class="mb-4">
+                    <label class="form-label">Cover Image URL (Optional)</label>
+                    <input type="url" class="form-control" name="cover_image" value="{{ book.cover_image or '' }}">
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">Update Book</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

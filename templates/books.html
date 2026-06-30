@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        {% if search_query %}Search Results for "{{ search_query }}"
+        {% elif current_series %}Series: {{ current_series }}
+        {% elif current_tag %}<i class="fas fa-hashtag text-primary"></i> {{ current_tag }}
+        {% else %}My Library{% endif %}
+    </h2>
+    <a href="{{ url_for('add_book') }}" class="btn btn-primary">Add New Book</a>
+</div>
+
+{% if not search_query and not current_series and not current_tag %}
+<div class="mb-4 d-flex flex-wrap gap-2">
+    <a href="{{ url_for('books') }}" class="btn btn-sm {% if current_filter == 'all' %}btn-primary{% else %}btn-outline-primary{% endif %}" style="border-radius: 20px; padding: 0.4rem 1rem;">
+        All Books
+    </a>
+    <a href="{{ url_for('books', filter='favorites') }}" class="btn btn-sm {% if current_filter == 'favorites' %}btn-primary{% else %}btn-outline-primary{% endif %}" style="border-radius: 20px; padding: 0.4rem 1rem;">
+        <i class="fas fa-heart {% if current_filter == 'favorites' %}text-white{% else %}text-danger{% endif %}"></i> Favorites
+    </a>
+    <a href="{{ url_for('books', filter='Currently Reading') }}" class="btn btn-sm {% if current_filter == 'Currently Reading' %}btn-primary{% else %}btn-outline-primary{% endif %}" style="border-radius: 20px; padding: 0.4rem 1rem;">
+        Reading
+    </a>
+    <a href="{{ url_for('books', filter='Want to Read') }}" class="btn btn-sm {% if current_filter == 'Want to Read' %}btn-primary{% else %}btn-outline-primary{% endif %}" style="border-radius: 20px; padding: 0.4rem 1rem;">
+        Want to Read
+    </a>
+    <a href="{{ url_for('books', filter='Completed') }}" class="btn btn-sm {% if current_filter == 'Completed' %}btn-primary{% else %}btn-outline-primary{% endif %}" style="border-radius: 20px; padding: 0.4rem 1rem;">
+        Completed
+    </a>
+</div>
+{% endif %}
+
+<div class="row g-4">
+    {% for book in books %}
+    <div class="col-md-4 col-lg-3">
+        <div class="glass-card h-100 p-3 hover-lift position-relative d-flex flex-column">
+            <button class="btn btn-link position-absolute top-0 end-0 mt-2 me-2 p-0 text-decoration-none favorite-btn z-3" data-id="{{ book.id }}" title="Toggle Favorite" style="background: rgba(0,0,0,0.5); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                <i class="fa-heart fs-6 {% if book.favorite %}fas text-danger{% else %}far text-white{% endif %}"></i>
+            </button>
+
+            <div class="rounded mb-3 overflow-hidden shadow-sm flex-shrink-0" style="height: 220px; background: rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; padding: 0.5rem;">
+                {% if book.cover_image %}
+                    <img src="{{ book.cover_image }}" alt="Cover" class="w-100 h-100" style="object-fit: contain;">
+                {% else %}
+                    <i class="fas fa-book fa-3x" style="color: rgba(255,255,255,0.1);"></i>
+                {% endif %}
+            </div>
+
+            <div class="flex-grow-1">
+                <h5 class="card-title text-truncate mb-1" style="color: var(--text-color);" title="{{ book.title }}">{{ book.title }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted text-truncate">{{ book.author }}</h6>
+                
+                {% if book.rating and book.rating > 0 %}
+                <div class="mb-2">
+                    {% for i in range(1, 6) %}
+                        <i class="fa-star {% if i <= book.rating %}fas text-warning{% else %}far text-muted opacity-50{% endif %}"></i>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                {% if book.series %}
+                <div class="mb-2 mt-2">
+                    <a href="{{ url_for('books', series=book.series) }}" class="badge text-decoration-none" style="background-color: rgba(139, 92, 246, 0.2); color: var(--accent-primary); border: 1px solid var(--accent-primary);">
+                        {{ book.series }} {% if book.series_number %}#{{ book.series_number }}{% endif %}
+                    </a>
+                </div>
+                {% endif %}
+
+                {% if book.tags %}
+                <div class="mb-3 d-flex flex-wrap gap-1 mt-2">
+                    {% for tag in book.tags.split(',') %}
+                    {% set clean_tag = tag.strip() %}
+                    {% if clean_tag %}
+                        <a href="{{ url_for('books', tag=clean_tag) }}" class="badge text-decoration-none bg-secondary opacity-75 hover-lift" style="font-weight: 500;">
+                            #{{ clean_tag }}
+                        </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% if book.status == 'Completed' %}
+                    <span class="badge bg-success mb-2">Completed</span>
+                {% elif book.status == 'Currently Reading' %}
+                    <span class="badge bg-warning text-dark mb-2">Reading</span>
+                {% elif book.status == 'Want to Read' %}
+                    <span class="badge bg-info text-dark mb-2">Want to Read</span>
+                {% else %}
+                    <span class="badge bg-secondary mb-2">Abandoned</span>
+                {% endif %}
+            </div>
+
+            <div class="mt-auto pt-2">
+                <div class="progress mb-3" style="height: 6px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ book.progress_percentage }}%;"></div>
+                </div>
+                <a href="{{ url_for('book_detail', id=book.id) }}" class="btn btn-sm btn-outline-primary w-100">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="col-12 text-center mt-5">
+        <div class="glass-card p-5 d-inline-block mt-4">
+            <i class="fas fa-books fa-4x text-muted mb-3"></i>
+            <h4 style="color: var(--text-color);">No books found.</h4>
+            <p class="text-muted mb-4">It looks a little empty here!</p>
+            <a href="{{ url_for('add_book') }}" class="btn btn-primary">Add Your First Book</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

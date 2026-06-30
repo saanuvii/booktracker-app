@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="mb-4">
+    <a href="{{ url_for('books') }}" class="text-decoration-none text-muted hover-lift d-inline-block">
+        <i class="fas fa-arrow-left me-2"></i> Back to Library
+    </a>
+</div>
+
+<div class="glass-card p-4 p-md-5 mb-5">
+    <div class="row g-5">
+        <div class="col-md-4 text-center">
+            <div class="rounded mb-4 overflow-hidden shadow-lg mx-auto" style="max-width: 250px; background: rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; aspect-ratio: 2/3;">
+                {% if book.cover_image %}
+                    <img src="{{ book.cover_image }}" alt="Cover" class="w-100 h-100" style="object-fit: cover;">
+                {% else %}
+                    <i class="fas fa-book fa-5x" style="color: rgba(255,255,255,0.1);"></i>
+                {% endif %}
+            </div>
+
+            <div class="d-grid gap-2">
+                <a href="{{ url_for('edit_book', id=book.id) }}" class="btn btn-primary hover-lift"><i class="fas fa-edit me-2"></i> Edit Book</a>
+                <form action="{{ url_for('delete_book', id=book.id) }}" method="POST" onsubmit="return confirmDelete();">
+                    <button type="submit" class="btn btn-outline-danger w-100 hover-lift"><i class="fas fa-trash-alt me-2"></i> Delete</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <h1 class="mb-0" style="color: var(--text-color); font-weight: 700;">{{ book.title }}</h1>
+                {% if book.favorite %}
+                <i class="fas fa-heart text-danger fs-3" title="Favorite"></i>
+                {% endif %}
+            </div>
+            <h3 class="text-muted mb-3">{{ book.author }}</h3>
+
+            {% if book.rating and book.rating > 0 %}
+            <div class="mb-4 fs-3 text-warning">
+                {% for i in range(1, 6) %}
+                    <i class="fa-star {% if i <= book.rating %}fas{% else %}far opacity-50{% endif %}"></i>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="mb-4 text-muted fst-italic">No rating given</div>
+            {% endif %}
+
+            <div class="mb-3 d-flex flex-wrap gap-2">
+                {% if book.status == 'Completed' %}
+                    <span class="badge bg-success fs-6">Completed</span>
+                {% elif book.status == 'Currently Reading' %}
+                    <span class="badge bg-warning text-dark fs-6">Reading</span>
+                {% elif book.status == 'Want to Read' %}
+                    <span class="badge bg-info text-dark fs-6">Want to Read</span>
+                {% else %}
+                    <span class="badge bg-secondary fs-6">Abandoned</span>
+                {% endif %}
+
+                {% if book.series %}
+                    <span class="badge" style="background-color: rgba(139, 92, 246, 0.2); color: var(--accent-primary); border: 1px solid var(--accent-primary); font-size: 1rem;">
+                        {{ book.series }} {% if book.series_number %}#{{ book.series_number }}{% endif %}
+                    </span>
+                {% endif %}
+                
+                {% if book.genre %}
+                    <span class="badge bg-secondary opacity-75 fs-6">{{ book.genre }}</span>
+                {% endif %}
+            </div>
+
+            {% if book.tags %}
+            <div class="mb-4 d-flex flex-wrap gap-2">
+                {% for tag in book.tags.split(',') %}
+                {% set clean_tag = tag.strip() %}
+                {% if clean_tag %}
+                    <a href="{{ url_for('books', tag=clean_tag) }}" class="badge bg-secondary opacity-50 text-decoration-none hover-lift">#{{ clean_tag }}</a>
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <hr style="border-color: var(--glass-border);">
+
+            <div class="mb-4">
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="fw-bold">Reading Progress</span>
+                    <span>{{ book.current_page }} / {{ book.total_pages }} Pages ({{ book.progress_percentage }}%)</span>
+                </div>
+                <div class="progress" style="height: 12px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: {{ book.progress_percentage }}%;"></div>
+                </div>
+            </div>
+
+            <div class="row mb-4 text-muted small">
+                <div class="col-sm-6">
+                    <i class="far fa-calendar-plus me-1"></i> Added: {{ book.date_added.strftime('%b %d, %Y') if book.date_added else 'Unknown' }}
+                </div>
+                {% if book.completion_date %}
+                <div class="col-sm-6">
+                    <i class="far fa-calendar-check me-1 text-success"></i> Completed: {{ book.completion_date.strftime('%b %d, %Y') }}
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="p-4 rounded shadow-sm" style="background: var(--input-bg);">
+                <h5 class="mb-3"><i class="fas fa-sticky-note text-primary me-2"></i>Notes & Thoughts</h5>
+                {% if book.notes %}
+                    <p class="mb-0" style="white-space: pre-wrap; line-height: 1.6; color: var(--text-color);">{{ book.notes }}</p>
+                {% else %}
+                    <p class="text-muted fst-italic mb-0">No notes added for this book.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

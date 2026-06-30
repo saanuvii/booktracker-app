@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+    <h2 class="mb-0">Dashboard Overview</h2>
+    
+    <div class="d-flex align-items-center gap-2">
+        <a href="{{ url_for('export_csv') }}" class="btn btn-outline-primary"><i class="fas fa-download"></i> Export CSV</a>
+        <form action="{{ url_for('import_csv') }}" method="POST" enctype="multipart/form-data" class="d-flex align-items-center">
+            <input type="file" name="csv_file" class="form-control form-control-sm me-2" accept=".csv" required style="max-width: 200px;">
+            <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-upload"></i> Import</button>
+        </form>
+    </div>
+</div>
+
+<div class="glass-card p-4 mb-5 border-start border-4" style="border-left-color: var(--accent-primary) !important;">
+    <div class="d-flex justify-content-between align-items-end mb-2">
+        <div>
+            <h5 class="mb-1"><i class="fas fa-trophy text-warning me-2"></i> {{ challenge.year }} Reading Challenge</h5>
+            <p class="text-muted mb-0">You have read <strong>{{ challenge.current }}</strong> out of <strong>{{ challenge.goal }}</strong> books this year.</p>
+        </div>
+        <h3 class="mb-0" style="color: var(--accent-primary);">{{ challenge.progress }}%</h3>
+    </div>
+    <div class="progress" style="height: 12px;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: {{ challenge.progress }}%;"></div>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-3">
+        <div class="glass-card text-center p-4">
+            <i class="fas fa-book fa-2x text-primary mb-3"></i>
+            <h2 class="mb-0">{{ stats.total }}</h2>
+            <p class="text-muted mb-0">Total Books</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="glass-card text-center p-4">
+            <i class="fas fa-check-circle fa-2x text-success mb-3"></i>
+            <h2 class="mb-0">{{ stats.completed }}</h2>
+            <p class="text-muted mb-0">Completed</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="glass-card text-center p-4">
+            <i class="fas fa-spinner fa-2x text-warning mb-3"></i>
+            <h2 class="mb-0">{{ stats.reading }}</h2>
+            <p class="text-muted mb-0">Currently Reading</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="glass-card text-center p-4">
+            <i class="fas fa-bookmark fa-2x text-info mb-3"></i>
+            <h2 class="mb-0">{{ stats.want }}</h2>
+            <p class="text-muted mb-0">Want to Read</p>
+        </div>
+    </div>
+</div>
+
+<div class="glass-card p-4 mb-5 text-center" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);">
+    <h3 class="mb-2"><i class="fas fa-magic text-primary"></i> What Should I Read Next?</h3>
+    <p class="text-muted mb-4">Let fate decide your next adventure from your "Want to Read" pile.</p>
+    <button class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow-lg hover-lift" data-bs-toggle="modal" data-bs-target="#randomBookModal" id="triggerRandomBtn">
+        <i class="fas fa-dice"></i> Pick For Me
+    </button>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-8">
+        <div class="row g-4">
+            <div class="col-12">
+                <h4 class="mb-3">Library Analytics</h4>
+                <div class="glass-card p-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 text-center">
+                            {% if genre_data %}
+                                <canvas id="genreChart" style="max-height: 250px;"></canvas>
+                            {% else %}
+                                <p class="text-muted py-5">Add genres to your books to see your breakdown!</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="mb-3">Top Genres</h5>
+                            <ul class="list-group list-group-flush bg-transparent">
+                                {% for genre, count in genre_data.items() %}
+                                <li class="list-group-item bg-transparent border-secondary d-flex justify-content-between align-items-center px-0" style="color: var(--text-color);">
+                                    {{ genre }}
+                                    <span class="badge bg-primary rounded-pill">{{ count }}</span>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <h4 class="mb-3">Recently Added</h4>
+                <div class="glass-card p-4">
+                    {% for book in recent_books %}
+                    <div class="d-flex align-items-center mb-3 border-bottom pb-3" style="border-color: var(--glass-border) !important;">
+                        <div class="flex-grow-1">
+                            <h5 class="mb-1">
+                                <a href="{{ url_for('book_detail', id=book.id) }}" class="text-decoration-none" style="color: var(--text-color);">{{ book.title }}</a>
+                            </h5>
+                            <small class="text-muted">{{ book.author }} | {{ book.status }}</small>
+                            <div class="progress mt-2" style="height: 5px;">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ book.progress_percentage }}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <p class="text-muted text-center my-4">No books added yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <h4 class="mb-3">Reading Stats</h4>
+        <div class="row g-4">
+            <div class="col-12">
+                <div class="glass-card p-4 text-center border-top border-4" style="border-color: var(--bs-success) !important;">
+                    <h5 class="mb-3 text-muted">Completion Rate</h5>
+                    <div class="progress mb-1" style="height: 25px;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: {{ stats.rate }}%;">
+                            <span class="fw-bold text-white">{{ stats.rate }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12">
+                <div class="glass-card p-4 text-center border-top border-4" style="border-color: var(--accent-primary) !important;">
+                    <h5 class="mb-2 text-muted">Total Pages Read</h5>
+                    <h1 style="color: var(--accent-primary); font-weight: 700; font-size: 3.5rem; margin-bottom: 0;">{{ stats.pages_read }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Inject Chart.js data safely
+    const chartLabels = {{ genre_data.keys() | list | tojson }};
+    const chartValues = {{ genre_data.values() | list | tojson }};
+</script>
+{% endblock %}
+
+{% block modals %}
+<div class="modal fade" id="randomBookModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass-card shadow-lg" style="background-color: transparent !important; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border) !important;">
+            
+            <div class="modal-body text-center p-5">
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
+                
+                <div id="randomLoadingState">
+                    <i class="fas fa-sync-alt fa-spin fa-4x text-primary mb-4"></i>
+                    <h4 style="color: var(--text-color);">Consulting the Library...</h4>
+                </div>
+
+                <div id="randomResultState" style="display: none;">
+                    <h5 class="text-muted mb-4">Your Next Adventure Is...</h5>
+                    
+                    <div class="rounded mb-4 mx-auto overflow-hidden shadow-lg" style="height: 250px; width: 170px; background: rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; border: 1px solid var(--glass-border);">
+                        <img id="randomCover" src="" class="w-100 h-100" style="object-fit: contain; display: none;">
+                        <i id="randomCoverPlaceholder" class="fas fa-book fa-4x" style="color: rgba(255,255,255,0.1);"></i>
+                    </div>
+                    
+                    <h3 id="randomTitle" style="color: var(--text-color);" class="mb-1">Title</h3>
+                    <h6 id="randomAuthor" class="text-muted mb-4">Author</h6>
+                    
+                    <a href="#" id="randomViewBtn" class="btn btn-primary w-100 rounded-pill mt-2 hover-lift">View Book Details</a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

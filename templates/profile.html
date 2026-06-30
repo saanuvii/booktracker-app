@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex align-items-center">
+                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3 shadow-sm" style="width: 80px; height: 80px; font-size: 2.5rem;">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div>
+                    <h2 class="mb-0 text-gradient">{{ current_user.username }}'s Profile</h2>
+                    <p class="text-muted mb-0">Reader Extraordinaire</p>
+                </div>
+            </div>
+            
+            <a href="{{ url_for('logout') }}" class="btn btn-outline-danger shadow-sm hover-lift">
+                <i class="fas fa-sign-out-alt me-2"></i> Logout
+            </a>
+        </div>
+
+        <div class="row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="glass-card text-center p-4 h-100 border-top border-4" style="border-color: var(--accent-primary) !important;">
+                    <i class="fas fa-book fa-2x text-primary mb-2"></i>
+                    <h3>{{ total_books }}</h3>
+                    <p class="text-muted mb-0">Total Books Logged</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-card text-center p-4 h-100 border-top border-4" style="border-color: var(--bs-warning) !important;">
+                    <i class="fas fa-star fa-2x text-warning mb-2"></i>
+                    <h3>{{ five_star }}</h3>
+                    <p class="text-muted mb-0">5-Star Masterpieces</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass-card text-center p-4 h-100 border-top border-4" style="border-color: var(--bs-success) !important;">
+                    <i class="fas fa-book-reader fa-2x text-success mb-2"></i>
+                    <h3>{{ pages_read }}</h3>
+                    <p class="text-muted mb-0">Total Pages Read</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="glass-card p-4 mb-5">
+            <h4 class="mb-4"><i class="fas fa-shield-alt text-primary me-2"></i> Account Security</h4>
+            <form method="POST" action="{{ url_for('profile') }}" onsubmit="return validatePass()">
+                <div class="mb-3">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-control" value="{{ current_user.username }}" disabled>
+                    <div class="form-text">Usernames cannot be changed once created.</div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label">New Password</label>
+                        <div class="input-group">
+                            <input type="password" name="new_password" id="p1" class="form-control" placeholder="Leave blank to keep current">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePass('p1')"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Confirm New Password</label>
+                        <div class="input-group">
+                            <input type="password" id="p2" class="form-control" placeholder="Confirm new password">
+                            <button class="btn btn-outline-secondary" type="button" onclick="togglePass('p2')"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary hover-lift"><i class="fas fa-save me-2"></i> Update Security Settings</button>
+            </form>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    function togglePass(id) {
+        const x = document.getElementById(id);
+        const icon = x.nextElementSibling.querySelector('i');
+        if (x.type === "password") {
+            x.type = "text";
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            x.type = "password";
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
+    function validatePass() {
+        const p1 = document.getElementById('p1').value;
+        const p2 = document.getElementById('p2').value;
+        if(p1 && p1 !== p2) { 
+            alert("Passwords do not match!"); 
+            return false; 
+        }
+        return true;
+    }
+</script>
+{% endblock %}

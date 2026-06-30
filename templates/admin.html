@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-danger fw-bold"><i class="fas fa-crown me-2"></i> Super Admin Dashboard</h2>
+</div>
+
+<div class="row g-4 mb-5">
+    <div class="col-md-4">
+        <div class="glass-card text-center p-4 h-100 border-top border-4" style="border-color: var(--bs-danger) !important;">
+            <i class="fas fa-users fa-2x text-danger mb-2"></i>
+            <h3>{{ total_users }}</h3>
+            <p class="text-muted mb-0">Total Registered Users</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="glass-card text-center p-4 h-100 border-top border-4" style="border-color: var(--accent-primary) !important;">
+            <i class="fas fa-book fa-2x text-primary mb-2"></i>
+            <h3>{{ total_books }}</h3>
+            <p class="text-muted mb-0">Total Books Logged Platform-Wide</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="glass-card text-center p-4 h-100 border-top border-4" style="border-color: var(--bs-success) !important;">
+            <i class="fas fa-book-reader fa-2x text-success mb-2"></i>
+            <h3>{{ total_pages }}</h3>
+            <p class="text-muted mb-0">Total Pages Read Platform-Wide</p>
+        </div>
+    </div>
+</div>
+
+<div class="glass-card p-4">
+    <h4 class="mb-4"><i class="fas fa-users-cog text-primary me-2"></i> User Management</h4>
+    
+    <div class="table-responsive">
+        <table class="table table-hover align-middle" style="color: var(--text-color);">
+            <thead>
+                <tr style="border-bottom-color: var(--glass-border);">
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Total Books</th>
+                    <th>Completed</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stat in users %}
+                <tr style="border-bottom-color: rgba(255,255,255,0.1);">
+                    <td class="text-muted">#{{ stat.user.id }}</td>
+                    <td class="fw-bold">{{ stat.user.username }}</td>
+                    <td>
+                        {% if stat.user.is_admin %}
+                            <span class="badge bg-danger">Admin</span>
+                        {% else %}
+                            <span class="badge bg-secondary">User</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ stat.book_count }}</td>
+                    <td>{{ stat.completed_count }}</td>
+                    <td class="text-end">
+                        {% if not stat.user.is_admin %}
+                        <form action="{{ url_for('admin_delete_user', user_id=stat.user.id) }}" method="POST" class="d-inline" onsubmit="return confirm('WARNING: Are you sure you want to completely erase {{ stat.user.username }} and all their books? This cannot be undone.');">
+                            <button type="submit" class="btn btn-sm btn-outline-danger hover-lift">
+                                <i class="fas fa-trash-alt"></i> Terminate Account
+                            </button>
+                        </form>
+                        {% else %}
+                        <button class="btn btn-sm btn-outline-secondary disabled" title="Cannot delete admin accounts"><i class="fas fa-shield-alt"></i> Protected</button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
