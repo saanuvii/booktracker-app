@@ -17,5 +17,5 @@ SQLAlchemy==2.0.50
 typing_extensions==4.15.0
 urllib3==2.7.0
 Werkzeug==3.0.1
-psycopg2-binary==2.9.9
+psycopg2-binary>=2.9.9
 gunicorn==21.2.0
