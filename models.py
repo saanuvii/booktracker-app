@@ -10,6 +10,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(150), unique=True, nullable=False)
     password_hash = db.Column(db.String(256), nullable=False)
     is_admin = db.Column(db.Boolean, default=False) # NEW: Admin privilege flag
+    yearly_goal = db.Column(db.Integer, default=50) # NEW: Customizable yearly reading goal
     books = db.relationship('Book', backref='owner', lazy=True, cascade="all, delete-orphan") # NEW: Cascade deletion
 
 class Book(db.Model):

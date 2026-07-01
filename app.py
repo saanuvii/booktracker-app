@@ -156,7 +156,7 @@ def index():
     recently_added = Book.query.filter_by(user_id=current_user.id).order_by(Book.date_added.desc()).limit(5).all()
 
     current_year = datetime.now().year
-    yearly_goal = 50 
+    yearly_goal = current_user.yearly_goal 
     books_this_year = len([b for b in books if b.status == 'Completed' and b.completion_date and b.completion_date.year == current_year])
     yearly_progress = min(int((books_this_year / yearly_goal) * 100), 100)
 
