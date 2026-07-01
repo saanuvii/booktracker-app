@@ -67,6 +67,21 @@ def logout():
     return redirect(url_for('login'))
 
 # --- PROFILE ROUTE ---
+
+@app.route('/update_goal', methods=['POST'])
+@login_required
+def update_goal():
+    try:
+        new_goal = int(request.form.get('yearly_goal', 50))
+        if new_goal < 1:
+            new_goal = 1
+        current_user.yearly_goal = new_goal
+        db.session.commit()
+        flash('Reading goal updated successfully!', 'success')
+    except ValueError:
+        flash('Invalid goal number.', 'danger')
+    return redirect(url_for('profile'))
+
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
