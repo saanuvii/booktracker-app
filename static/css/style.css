@@ -290,3 +290,7 @@ body {
 [data-bs-theme="light"] .badge.bg-success, [data-bs-theme="light"] .badge.bg-warning, [data-bs-theme="light"] .badge.bg-danger, [data-bs-theme="light"] .badge.bg-info, [data-bs-theme="light"] .badge.bg-primary {
     color: var(--text-color); /* better readability in light mode */
 }
+
+.bg-muted-accent {
+    background-color: var(--accent-primary) !important;
+}

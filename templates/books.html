@@ -60,7 +60,7 @@
 
                 {% if book.series %}
                 <div class="mb-2 mt-2">
-                    <a href="{{ url_for('books', series=book.series) }}" class="badge text-decoration-none" style="background-color: rgba(139, 92, 246, 0.2); color: var(--accent-primary); border: 1px solid var(--accent-primary);">
+                    <a href="{{ url_for('books', series=book.series) }}" class="badge text-decoration-none" style="background-color: rgba(141, 122, 171, 0.2); color: var(--accent-primary); border: 1px solid var(--accent-primary);">
                         {{ book.series }} {% if book.series_number %}#{{ book.series_number }}{% endif %}
                     </a>
                 </div>
@@ -80,7 +80,7 @@
                 {% endif %}
 
                 {% if book.status == 'Completed' %}
-                    <span class="badge bg-success mb-2">Completed</span>
+                    <span class="badge bg-muted-accent mb-2">Completed</span>
                 {% elif book.status == 'Currently Reading' %}
                     <span class="badge bg-warning text-dark mb-2">Reading</span>
                 {% elif book.status == 'Want to Read' %}
@@ -92,7 +92,7 @@
 
             <div class="mt-auto pt-2">
                 <div class="progress mb-3" style="height: 6px;">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ book.progress_percentage }}%;"></div>
+                    <div class="progress-bar bg-muted-accent" role="progressbar" style="width: {{ book.progress_percentage }}%;"></div>
                 </div>
                 <a href="{{ url_for('book_detail', id=book.id) }}" class="btn btn-sm btn-outline-primary w-100">View Details</a>
             </div>
