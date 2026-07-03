@@ -20,8 +20,8 @@
 
 /* LIGHT MODE (Crisp Royal Lavender) */
 [data-bs-theme="light"] {
-    --bg-color-main: #f8fafc; /* Crisp cool white */
-    --bg-color-secondary: #f1f5f9;
+    --bg-color-main: #fcfbfe; /* Very light lavender */
+    --bg-color-secondary: #f7f5fb;
 
     --glass-bg: rgba(255, 255, 255, 0.85);
     --glass-border: rgba(109, 40, 217, 0.2);
@@ -193,13 +193,13 @@ body {
 }
 
 .btn-success {
-    background: rgba(16, 185, 129, 0.15);
-    border-color: rgba(16, 185, 129, 0.3);
-    color: #10b981 !important;
+    background: rgba(76, 175, 80, 0.15);
+    border-color: rgba(76, 175, 80, 0.3);
+    color: #4caf50 !important;
 }
 .btn-success:hover {
-    background: rgba(16, 185, 129, 0.25);
-    border-color: rgba(16, 185, 129, 0.5);
+    background: rgba(76, 175, 80, 0.25);
+    border-color: rgba(76, 175, 80, 0.5);
 }
 
 .btn-danger {
@@ -265,12 +265,12 @@ body {
 /* =========================================
    ELEGANT STATUS COLORS
    ========================================= */
-.text-success { color: #10b981 !important; } /* Vibrant Emerald */
+.text-success { color: #4caf50 !important; } /* Elegant Soft Green */
 .text-warning { color: #f59e0b !important; } /* Vibrant Amber */
 .text-danger { color: #ef4444 !important; } /* Vibrant Rose */
 .text-info { color: #3b82f6 !important; } /* Vibrant Blue */
 
-.bg-success { background-color: #10b981 !important; color: white; }
+.bg-success { background-color: #4caf50 !important; color: white; }
 .bg-warning { background-color: #f59e0b !important; color: white; }
 .bg-danger { background-color: #ef4444 !important; color: white; }
 .bg-info { background-color: #3b82f6 !important; color: white; }
@@ -278,12 +278,12 @@ body {
 /* =========================================
    ELEGANT BADGES AND BORDERS
    ========================================= */
-.border-success { border-color: #10b981 !important; }
+.border-success { border-color: #4caf50 !important; }
 .border-warning { border-color: #f59e0b !important; }
 .border-danger { border-color: #ef4444 !important; }
 .border-info { border-color: #3b82f6 !important; }
 
-.badge.bg-success { background-color: rgba(16, 185, 129, 0.15) !important; color: #10b981 !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; }
+.badge.bg-success { background-color: rgba(76, 175, 80, 0.2) !important; color: #4caf50 !important; border: 1px solid rgba(76, 175, 80, 0.4) !important; }
 .badge.bg-warning { background-color: rgba(245, 158, 11, 0.15) !important; color: #f59e0b !important; border: 1px solid rgba(245, 158, 11, 0.3) !important; }
 .badge.bg-danger { background-color: rgba(239, 68, 68, 0.15) !important; color: #ef4444 !important; border: 1px solid rgba(239, 68, 68, 0.3) !important; }
 .badge.bg-info { background-color: rgba(59, 130, 246, 0.15) !important; color: #3b82f6 !important; border: 1px solid rgba(59, 130, 246, 0.3) !important; }

@@ -46,7 +46,7 @@
 
             <div class="mb-3 d-flex flex-wrap gap-2">
                 {% if book.status == 'Completed' %}
-                    <span class="badge bg-muted-accent fs-6">Completed</span>
+                    <span class="badge bg-success fs-6">Completed</span>
                 {% elif book.status == 'Currently Reading' %}
                     <span class="badge bg-warning text-dark fs-6">Reading</span>
                 {% elif book.status == 'Want to Read' %}
@@ -85,7 +85,7 @@
                     <span>{{ book.current_page }} / {{ book.total_pages }} Pages ({{ book.progress_percentage }}%)</span>
                 </div>
                 <div class="progress" style="height: 12px;">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-muted-accent" role="progressbar" style="width: {{ book.progress_percentage }}%;"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: {{ book.progress_percentage }}%;"></div>
                 </div>
             </div>
 
