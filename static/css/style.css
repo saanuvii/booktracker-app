@@ -2,36 +2,36 @@
    VARIABLES & THEME SETUP
    ========================================= */
 
-/* DARK MODE (Royal Muted Plum - Brighter) */
+/* DARK MODE (Rich Royal Purple) */
 [data-bs-theme="dark"] {
-    --bg-color-main: #201a2c; /* Brighter deep plum */
-    --bg-color-secondary: #2b233a; /* Slightly lighter secondary */
+    --bg-color-main: #0b061c; /* Deep rich space purple */
+    --bg-color-secondary: #130a2b; /* Slightly lighter deep purple */
 
-    --glass-bg: rgba(255, 255, 255, 0.06);
-    --glass-border: rgba(162, 137, 199, 0.18);
-    --glass-highlight: rgba(255, 255, 255, 0.12);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(139, 92, 246, 0.3);
+    --glass-highlight: rgba(255, 255, 255, 0.1);
 
-    --accent-primary: #a18ac4; /* Brighter lavender accent */
-    --accent-secondary: #baabd1;
-    --text-color: #f2eef7;
+    --accent-primary: #8b5cf6; /* Vibrant amethyst */
+    --accent-secondary: #a78bfa;
+    --text-color: #ffffff;
 
-    --input-bg: rgba(0, 0, 0, 0.2);
+    --input-bg: rgba(255, 255, 255, 0.05);
 }
 
-/* LIGHT MODE (Elegant Muted Lavender - Brighter) */
+/* LIGHT MODE (Crisp Royal Lavender) */
 [data-bs-theme="light"] {
-    --bg-color-main: #fbf9fc; /* Very light, bright off-white lavender */
-    --bg-color-secondary: #f4f0f7;
+    --bg-color-main: #f8fafc; /* Crisp cool white */
+    --bg-color-secondary: #f1f5f9;
 
-    --glass-bg: rgba(255, 255, 255, 0.75);
-    --glass-border: rgba(121, 99, 150, 0.2);
-    --glass-highlight: rgba(255, 255, 255, 0.9);
+    --glass-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(109, 40, 217, 0.2);
+    --glass-highlight: rgba(255, 255, 255, 1);
 
-    --accent-primary: #7d6599; /* Richer accent */
-    --accent-secondary: #64507d;
-    --text-color: #27232e;
+    --accent-primary: #6d28d9; /* Deep rich purple */
+    --accent-secondary: #8b5cf6;
+    --text-color: #0f172a;
 
-    --input-bg: rgba(255, 255, 255, 0.6);
+    --input-bg: rgba(255, 255, 255, 0.9);
 }
 
 /* =========================================
@@ -61,8 +61,8 @@ body {
    ========================================= */
 .glass-nav {
     background: var(--glass-bg);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border-bottom: 1px solid var(--glass-border);
     padding: 1.2rem 0;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
@@ -84,8 +84,8 @@ body {
     border: 1px solid var(--glass-border);
     border-top: 1px solid var(--glass-highlight);
     border-left: 1px solid var(--glass-highlight);
-    border-radius: 24px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.1);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -171,8 +171,8 @@ body {
 }
 
 .btn-primary, .btn-outline-primary {
-    background: rgba(141, 122, 171, 0.15); /* Tinted with accent-primary */
-    border: 1px solid rgba(141, 122, 171, 0.3);
+    background: rgba(139, 92, 246, 0.2);
+    border: 1px solid rgba(139, 92, 246, 0.4);
     color: var(--accent-primary) !important;
 }
 
@@ -184,8 +184,8 @@ body {
 }
 
 .btn-primary:hover, .btn-outline-primary:hover {
-    background: rgba(141, 122, 171, 0.25);
-    border-color: rgba(141, 122, 171, 0.5);
+    background: rgba(139, 92, 246, 0.35);
+    border-color: rgba(139, 92, 246, 0.6);
     color: var(--accent-primary) !important;
 }
 [data-bs-theme="dark"] .btn-primary:hover, [data-bs-theme="dark"] .btn-outline-primary:hover {
@@ -193,39 +193,43 @@ body {
 }
 
 .btn-success {
-    background: rgba(85, 133, 100, 0.15);
-    border-color: rgba(85, 133, 100, 0.3);
-    color: #558564 !important;
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #10b981 !important;
 }
 .btn-success:hover {
-    background: rgba(85, 133, 100, 0.25);
+    background: rgba(16, 185, 129, 0.25);
+    border-color: rgba(16, 185, 129, 0.5);
 }
 
 .btn-danger {
-    background: rgba(189, 76, 76, 0.15);
-    border-color: rgba(189, 76, 76, 0.3);
-    color: #bd4c4c !important;
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.3);
+    color: #ef4444 !important;
 }
 .btn-danger:hover {
-    background: rgba(189, 76, 76, 0.25);
+    background: rgba(239, 68, 68, 0.25);
+    border-color: rgba(239, 68, 68, 0.5);
 }
 
 .btn-warning {
-    background: rgba(189, 146, 76, 0.15);
-    border-color: rgba(189, 146, 76, 0.3);
-    color: #bd924c !important;
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.3);
+    color: #f59e0b !important;
 }
 .btn-warning:hover {
-    background: rgba(189, 146, 76, 0.25);
+    background: rgba(245, 158, 11, 0.25);
+    border-color: rgba(245, 158, 11, 0.5);
 }
 
 .btn-info {
-    background: rgba(76, 153, 189, 0.15);
-    border-color: rgba(76, 153, 189, 0.3);
-    color: #4c99bd !important;
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.3);
+    color: #3b82f6 !important;
 }
 .btn-info:hover {
-    background: rgba(76, 153, 189, 0.25);
+    background: rgba(59, 130, 246, 0.25);
+    border-color: rgba(59, 130, 246, 0.5);
 }
 
 
@@ -259,33 +263,32 @@ body {
 }
 
 /* =========================================
-   MUTED STATUS COLORS
+   ELEGANT STATUS COLORS
    ========================================= */
-.text-success { color: #6a9c7d !important; } /* Muted Green */
-.text-warning { color: #c4a162 !important; } /* Muted Gold/Yellow */
-.text-danger { color: #cc6666 !important; } /* Muted Red */
-.text-info { color: #66a3cc !important; } /* Muted Blue */
+.text-success { color: #10b981 !important; } /* Vibrant Emerald */
+.text-warning { color: #f59e0b !important; } /* Vibrant Amber */
+.text-danger { color: #ef4444 !important; } /* Vibrant Rose */
+.text-info { color: #3b82f6 !important; } /* Vibrant Blue */
 
-.bg-success { background-color: #6a9c7d !important; color: white; }
-.bg-warning { background-color: #c4a162 !important; color: white; }
-.bg-danger { background-color: #cc6666 !important; color: white; }
-.bg-info { background-color: #66a3cc !important; color: white; }
-
+.bg-success { background-color: #10b981 !important; color: white; }
+.bg-warning { background-color: #f59e0b !important; color: white; }
+.bg-danger { background-color: #ef4444 !important; color: white; }
+.bg-info { background-color: #3b82f6 !important; color: white; }
 
 /* =========================================
-   MUTED BADGES AND BORDERS
+   ELEGANT BADGES AND BORDERS
    ========================================= */
-.border-success { border-color: #6a9c7d !important; }
-.border-warning { border-color: #c4a162 !important; }
-.border-danger { border-color: #cc6666 !important; }
-.border-info { border-color: #66a3cc !important; }
+.border-success { border-color: #10b981 !important; }
+.border-warning { border-color: #f59e0b !important; }
+.border-danger { border-color: #ef4444 !important; }
+.border-info { border-color: #3b82f6 !important; }
 
-.badge.bg-success { background-color: rgba(106, 156, 125, 0.2) !important; color: #6a9c7d !important; border: 1px solid rgba(106, 156, 125, 0.3) !important; }
-.badge.bg-warning { background-color: rgba(196, 161, 98, 0.2) !important; color: #c4a162 !important; border: 1px solid rgba(196, 161, 98, 0.3) !important; }
-.badge.bg-danger { background-color: rgba(204, 102, 102, 0.2) !important; color: #cc6666 !important; border: 1px solid rgba(204, 102, 102, 0.3) !important; }
-.badge.bg-info { background-color: rgba(102, 163, 204, 0.2) !important; color: #66a3cc !important; border: 1px solid rgba(102, 163, 204, 0.3) !important; }
-.badge.bg-primary { background-color: rgba(141, 122, 171, 0.2) !important; color: var(--accent-primary) !important; border: 1px solid rgba(141, 122, 171, 0.3) !important; }
-.badge.bg-secondary { background-color: rgba(128, 128, 128, 0.2) !important; color: #aaaaaa !important; border: 1px solid rgba(128, 128, 128, 0.3) !important; }
+.badge.bg-success { background-color: rgba(16, 185, 129, 0.15) !important; color: #10b981 !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; }
+.badge.bg-warning { background-color: rgba(245, 158, 11, 0.15) !important; color: #f59e0b !important; border: 1px solid rgba(245, 158, 11, 0.3) !important; }
+.badge.bg-danger { background-color: rgba(239, 68, 68, 0.15) !important; color: #ef4444 !important; border: 1px solid rgba(239, 68, 68, 0.3) !important; }
+.badge.bg-info { background-color: rgba(59, 130, 246, 0.15) !important; color: #3b82f6 !important; border: 1px solid rgba(59, 130, 246, 0.3) !important; }
+.badge.bg-primary { background-color: rgba(139, 92, 246, 0.15) !important; color: var(--accent-primary) !important; border: 1px solid rgba(139, 92, 246, 0.3) !important; }
+.badge.bg-secondary { background-color: rgba(148, 163, 184, 0.15) !important; color: #94a3b8 !important; border: 1px solid rgba(148, 163, 184, 0.3) !important; }
 
 [data-bs-theme="light"] .badge.bg-success, [data-bs-theme="light"] .badge.bg-warning, [data-bs-theme="light"] .badge.bg-danger, [data-bs-theme="light"] .badge.bg-info, [data-bs-theme="light"] .badge.bg-primary {
     color: var(--text-color); /* better readability in light mode */
