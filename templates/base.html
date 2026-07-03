@@ -26,7 +26,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Dashboard</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('books') }}">My Library</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('add_book') }}">Add Book</a></li>
-                    
+
                     {% if current_user.is_admin %}
                     <li class="nav-item ms-2">
                         <a class="nav-link text-danger fw-bold" href="{{ url_for('admin_dashboard') }}">
@@ -34,10 +34,10 @@
                         </a>
                     </li>
                     {% endif %}
-                    
+
                     {% endif %}
                 </ul>
-                
+
                 <button class="btn btn-link text-light me-3 text-decoration-none" id="themeToggle" title="Toggle Theme">
                     <i class="fas fa-sun fs-5"></i>
                 </button>
@@ -47,7 +47,7 @@
                     <input class="form-control me-2 border-secondary" type="search" name="q" placeholder="Search books...">
                     <button class="btn btn-outline-primary" type="submit">Search</button>
                 </form>
-                
+
                 <a href="{{ url_for('profile') }}" class="text-decoration-none d-flex align-items-center ms-2 hover-lift" style="color: var(--text-color);">
                     <i class="fas fa-user-circle fa-2x text-primary me-2"></i>
                     <span class="fw-bold">{{ current_user.username }}</span>
@@ -68,7 +68,7 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        
+
         {% block content %}{% endblock %}
     </div>
 
@@ -86,7 +86,7 @@
                 <button id="resetTimerBtn" class="btn btn-danger"><i class="fas fa-stop"></i></button>
             </div>
         </div>
-        
+
         <button id="toggleTimerPanel" class="btn btn-primary rounded-circle shadow-lg float-end d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; transition: transform 0.2s;">
             <i class="fas fa-stopwatch fs-4"></i>
         </button>
